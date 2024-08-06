@@ -1,0 +1,15 @@
+Catatan:
+Menu User
+1. Pada menu beranda sepakati nama barang saja atau dengan merk dan model
+2. pada menu detail barang hilangkan deskripsi barang
+3. Pada menu ditambahkan menu terima barang pada masing2 user agar mereka bisa cross check barang tersebut
+4. pada menu update tampilan transaksi dan digabungkan dengan NOMOR 3
+
+
+Menu Operator
+1. Dashboard memiliki update meliputi :
+   a. terdapat 2 Graphic yaitu G Stok Barang(persemester) dan G Histroy Distribusi (perbulan)
+   b. deskripsi terkait graphic dibawahnya;
+   c. pada G Stok terdapat 3 Summary, 1 List Peritem (200 Item) sudah berapa terdistribusi selama persemester, Penambahan Stock, dan Real Stock saat ini
+   d. pada G History, 1 summary berisikan list Department / User dan list permintaan mereka
+2. Logic Board oN

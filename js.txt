@@ -1,0 +1,69 @@
+User
+Dashboard Approve
+Single Item Approve
+Cart Progress
+Profile Progress
+
+Operator
+Dashboard
+Master Transaction
+Master Item
+Profile
+
+
+Kasubag
+Dashboard
+Aproval Transaction
+List Transaction
+Profile
+
+
+Alur
+User
+1. User Login
+2. User memilih barang di dashboard
+3. User menambah barang di katalog ke keranjang
+4. User melakukan proses pesanan dengan mengisi form sbb :
+    1. jumlah barang;
+    2. alasan. -> parameter
+		a. habis
+		b. hilang
+		c. rusak
+		d. stok
+    3. dokumentasi jika (rusak)
+5. User akan mencek ulang list pesanan dan lalu mengisi nomor surat pesanan
+6. Op Login
+7. Op membukan menu transaksi
+8. Op memproses pesanan
+9. Op mensortir jumlah pesanan yg dapat diminta
+10. Jika ada barang yg termasuk barang yg perlu aproval maka OP menunggu aproval dari Pimp
+11. Pimp Login
+12. Pimp membuka menu aproval
+13. Pimp melakukan Aproval pada permintaan user
+14. Op menyiapkan barang yang sudah disortir dan Aproval (Jika ada)
+15. Op merubah status pesanan pada aplikasi
+16. Op menyerahkan barang pada user 
+17. User menandatangani surat
+
+
+
+ 
+-> User login aplikasi
+-> User memilih barang yang tersedia di "dashboard"
+-> User mengklik gambar barang
+-> User diarahkan ke halaman detail barang
+-> User mengklik tambah ke cart jika ingin mengambil barang tersebut
+-> User mengklik tombol cart untuk melanjukan proses mengambilan barang
+-> User mengisi form peritem yaitu :
+   1. jumlah barang;
+   2. alasan. -> parameter
+		a. habis
+		b. hilang
+		c. rusak
+		d. stok
+   3. dokumentasi jika (rusak)
+
+-> Op standby diaplikasi
+-> Op melihat menu Transaksi
+-> Op melakukan proses pesanan
+-> Op mene
