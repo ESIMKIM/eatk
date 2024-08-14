@@ -333,42 +333,45 @@ class SVC_Ajax extends CI_Controller
         }
 
 
-        $s3 = $this->M_Products->update_stockSisa_byProd($dataH[$upId]->history_prod_id, $dataUpdate);
+        // $s3 = 
+        $this->M_Products->update_stockSisa_byProd($dataH[$upId]->history_prod_id, $dataUpdate);
+
+        return 200;
 
         //Update pengurangan stok pada tbl produk
 
-        $dataHeader = $this->M_Transactions->get_transHeaderbyProdid($prod_id);
-        $getNowPrices = $this->M_Transactions->get_nowPrices_by_Stock($prod_id);
+        // $dataHeader = $this->M_Transactions->get_transHeaderbyProdid($prod_id);
+        // $getNowPrices = $this->M_Transactions->get_nowPrices_by_Stock($prod_id);
 
-        $dataProduct = array(
-            'prices' => $getNowPrices[0]->prices,
-            'qty' => $dataHeader[0]->qty - $qty
-        );
+        // $dataProduct = array(
+        //     'prices' => $getNowPrices[0]->prices,
+        //     'qty' => $dataHeader[0]->qty - $qty
+        // );
 
-        $s1 = $this->M_Products->update_prods_byid($prod_id, $dataProduct);
+        // $s1 = $this->M_Products->update_prods_byid($prod_id, $dataProduct);
 
-        // return $s3;
-        // $array = array();
+        // // return $s3;
+        // // $array = array();
 
-        if ($s1 == false && $isNol = 0) {
-            return 400;
-            // $array = array(
-            //     'error' => true,
-            //     'pesan' => "data not affected s1" . $s1,
-            //     'pesan' => "data not affected s2" . $s2,
-            //     'pesan' => "data not affected s3" . $s3
-            // );
+        // if ($s1 == false && $isNol = 0) {
+        //     return 400;
+        //     // $array = array(
+        //     //     'error' => true,
+        //     //     'pesan' => "data not affected s1" . $s1,
+        //     //     'pesan' => "data not affected s2" . $s2,
+        //     //     'pesan' => "data not affected s3" . $s3
+        //     // );
 
-            // return $array;
-        } else {
-            return 200;
-            // $array = array(
-            //     'success' => true,
-            //     'pesan' => "data affected = " . $s3
-            // );
+        //     // return $array;
+        // } else {
+        //     return 200;
+        //     // $array = array(
+        //     //     'success' => true,
+        //     //     'pesan' => "data affected = " . $s3
+        //     // );
 
-            // return $array;
-        }
+        //     // return $array;
+        // }
         // echo json_encode($array);
     }
 
@@ -965,6 +968,52 @@ class SVC_Ajax extends CI_Controller
             $array = array(
                 'error' => true,
                 'pesan' => "Product Gagal Dihapus",
+            );
+        }
+
+        echo json_encode($array);
+    }
+
+    function up_historyStock()
+    {
+        $total = $this->input->post('total');
+        $terkirim = $this->input->post('terkirim');
+        $sisa = $this->input->post('sisa');
+        $id = $this->input->post('prodId');
+        $idbarang = $this->input->post('pID');
+
+
+        if (empty($terkirim) || empty($sisa)) {
+            $dataProduct = array(
+                'total' => $total,
+            );
+        } elseif (empty($total)) {
+            $dataProduct = array(
+                'terkirim' => $terkirim,
+                'sisa'   => $sisa,
+            );
+        } elseif (!empty($terkirim) || !empty($sisa) || !empty($total)) {
+            $dataProduct = array(
+                'total' => $total,
+                'terkirim' => $terkirim,
+                'sisa'   => $sisa,
+            );
+        }
+
+        $Test = $this->M_Transactions->update_historyStok($id, $dataProduct);
+
+
+        if ($Test) {
+            $array = array(
+                'id' => $idbarang,
+                'success' => true,
+                'pesan' => "Stock Berhasil Ditambah",
+            );
+        } else {
+            $array = array(
+                'id' => $idbarang,
+                'error' => true,
+                'pesan' => "Stock Gagal Ditambah",
             );
         }
 

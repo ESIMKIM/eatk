@@ -666,7 +666,7 @@ class CTR_Report extends CI_Controller
 
 		$spasi = "";
 		$rowData = count($getDataHeader);
-		if ($rowData <= 10) {
+		if ($rowData == 10) {
 			$spasi = "<br/><br/><br/><br/><br/>";
 		} elseif ($rowData >= 10 && $rowData <= 18) {
 			$spasi = "<br/>";
@@ -758,7 +758,10 @@ class CTR_Report extends CI_Controller
 
 		$kopSurat = base_url('assets/surat/kop_surat_imi.png');
 		$ttd_empty = base_url('assets/surat/icon_ttd.png');
-		$tanggal = date("Y-m-d");
+
+		// $tanggal = date("Y-m-d");
+		$dataTanggal = $this->M_Transactions->get_tanggalKeluarBarangByKurir($th_id);
+		$tanggal = $dataTanggal[0]->created_date;
 		$cetakTanggal = $this->tanggal_indo($tanggal);
 		$nomor_surat = $getDataHeader[0]->no_surat;
 		$tanggal_surat = $this->tanggal_indo($getDataHeader[0]->tgl_surat);

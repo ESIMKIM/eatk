@@ -18,17 +18,20 @@ class M_Report extends CI_Model
     public function get_cariBarangDetail($idBarang)
     {
         $value = $this->db->query(
-            "SELECT p.products_id, p.name, d.alias_dept, ttd.quantity, ttd.approval, tth.no_surat, tth.tgl_surat
-                FROM tbl_transaction_detail AS ttd
-                JOIN tbl_transaction_header AS tth
-                ON tth.th_id = ttd.th_id
-                JOIN tbl_user AS u
-                ON tth.user_id = u.user_id
-                JOIN tbl_department AS d
-                ON u.dept_id = id_department
-                JOIN tbl_products AS p
-                ON p.products_id = ttd.products_id
-                WHERE p.products_id = '$idBarang'"
+            "SELECT p.products_id, p.name, d.alias_dept, ttd.quantity, ttd.approval, tth.no_surat, tth.tgl_surat, ts.created_date
+            FROM tbl_transaction_detail AS ttd
+            JOIN tbl_transaction_header AS tth
+            ON tth.th_id = ttd.th_id
+            JOIN tbl_user AS u
+            ON tth.user_id = u.user_id
+            JOIN tbl_department AS d
+            ON u.dept_id = id_department
+            JOIN tbl_products AS p
+            ON p.products_id = ttd.products_id
+            JOIN tbl_transaction_signature AS ts
+            ON ts.th_id = tth.th_id
+            WHERE p.products_id = '$idBarang'
+            ORDER BY ts.created_date DESC"
         )->result();
 
         return $value;
@@ -159,6 +162,45 @@ class M_Report extends CI_Model
 
         $value = $this->db->query(
             "SELECT dep.alias_dept, p.name, 
+            SUM(CASE WHEN MONTH(ts.created_date) = 1 THEN td.approval END) AS acc_1,
+            SUM(CASE WHEN MONTH(ts.created_date) = 2 THEN td.approval END) AS acc_2,
+            SUM(CASE WHEN MONTH(ts.created_date) = 3 THEN td.approval END) AS acc_3,
+            SUM(CASE WHEN MONTH(ts.created_date) = 4 THEN td.approval END) AS acc_4,
+            SUM(CASE WHEN MONTH(ts.created_date) = 5 THEN td.approval END) AS acc_5,
+            SUM(CASE WHEN MONTH(ts.created_date) = 6 THEN td.approval END) AS acc_6,
+            SUM(CASE WHEN MONTH(ts.created_date) = 7 THEN td.approval END) AS acc_7,
+            SUM(CASE WHEN MONTH(ts.created_date) = 8 THEN td.approval END) AS acc_8,
+            SUM(CASE WHEN MONTH(ts.created_date) = 9 THEN td.approval END) AS acc_9,
+            SUM(CASE WHEN MONTH(ts.created_date) = 10 THEN td.approval END) AS acc_10,
+            SUM(CASE WHEN MONTH(ts.created_date) = 11 THEN td.approval END) AS acc_11,
+            SUM(CASE WHEN MONTH(ts.created_date) = 12 THEN td.approval END) AS acc_12
+     FROM `tbl_transaction_detail` AS td
+     JOIN `tbl_transaction_header` AS th
+     ON td.th_id = th.th_id
+     JOIN `tbl_user` AS u
+     ON th.user_id = u.user_id
+     JOIN `tbl_department` AS dep
+     ON dep.id_department = u.dept_id
+     JOIN `tbl_products` AS p
+     ON p.products_id = td.products_id
+     JOIN tbl_transaction_signature AS ts
+     ON ts.th_id = th.th_id
+     WHERE td.th_id IN(SELECT th_id FROM `tbl_transaction_header` WHERE `user_id` IN(SELECT user_id FROM `tbl_user` WHERE `dept_id` = '$depId'))
+     GROUP BY p.name"
+
+        )->result();
+
+        return $value;
+    }
+
+    public function get_report_itemTrans_eachMonthxxxxxx($depId)
+    {
+        // if (empty($depId)) {
+        //     $depId = '1';
+        // }
+
+        $value = $this->db->query(
+            "SELECT dep.alias_dept, p.name, 
             SUM(CASE WHEN MONTH(th.tgl_surat) = 1 THEN td.approval END) AS acc_1,
             SUM(CASE WHEN MONTH(th.tgl_surat) = 2 THEN td.approval END) AS acc_2,
             SUM(CASE WHEN MONTH(th.tgl_surat) = 3 THEN td.approval END) AS acc_3,
@@ -187,6 +229,7 @@ class M_Report extends CI_Model
 
         return $value;
     }
+
 
 
 

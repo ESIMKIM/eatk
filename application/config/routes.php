@@ -179,6 +179,8 @@ $route['cetak_BAST/(:any)'] = 'CTR_Report/gen_transactionBast/$1';
 //Admin
 $route['update_Qtyacc'] = 'SVC_Ajax/upAdmQtyAproval';
 $route['update_reasonacc'] = 'SVC_Ajax/upAdmReasonAproval';
+$route['update_historyStok'] = 'SVC_Ajax/up_historyStock';
+
 
 $route['update_kategoriStats'] = 'SVC_Ajax/up_kategory_status';
 $route['update_merkStats'] = 'SVC_Ajax/up_merk_status';

@@ -3,6 +3,15 @@ defined('BASEPATH') or die('No direct script access allowed!');
 
 class M_Transactions extends CI_Model
 {
+    function get_tanggalKeluarBarangByKurir($th_id)
+    {
+        $value = $this->db->query(
+            "SELECT * FROM tbl_transaction_signature WHERE th_id = $th_id"
+        )->result();
+
+        return $value;
+    }
+
 
     function get_ReportallStok()
     {
@@ -533,7 +542,7 @@ class M_Transactions extends CI_Model
     public function get_datahitoryId_byProdsId($id)
     {
         $value = $this->db->query(
-            "SELECT sh.* , p.`name`
+            "SELECT sh.* , p.`name`, p.products_id
             FROM `tbl_products` AS p
             JOIN `tbl_products_stock_history` AS sh            
             ON p.`products_id` = sh.`products_id`
@@ -653,6 +662,20 @@ class M_Transactions extends CI_Model
 
         $this->db->where('td_id', $id);
         $this->db->update('tbl_transaction_detail', $data);
+
+        if ($this->db->affected_rows()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    function update_historyStok($id, $data)
+    {
+
+        $this->db->where('history_prod_id', $id);
+        $this->db->update('tbl_products_stock_history', $data);
 
         if ($this->db->affected_rows()) {
             return true;
